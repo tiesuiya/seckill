@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为dao接口提供实现 -->
+<mapper namespace="org.seckill.dao.SeckillDao">
+    <update id="reduceNumber">
+        UPDATE
+            seckill
+        SET
+            number = number - 1
+        WHERE id = #{id}
+        AND start_time <![CDATA[<=]]> #{killTime}
+        AND end_time >= #{killTime}
+        AND number > 0;
+    </update>
+    <select id="getSeckillById" resultType="Seckill">
+        SELECT id, product_id, product_name, number, start_time, end_time, gmt_create, gmt_modified
+        FROM seckill
+        WHERE id = #{id}
+    </select>
+    <select id="listSeckillByOffsetAndLimit" resultType="Seckill">
+        SELECT id, product_id, product_name, number, start_time, end_time, gmt_create, gmt_modified
+        FROM seckill
+        ORDER BY gmt_create DESC
+        limit #{offset}, #{limit}
+    </select>
+</mapper>
+        
