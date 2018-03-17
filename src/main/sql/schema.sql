@@ -33,13 +33,12 @@ INSERT INTO seckill(product_id, product_name, number, start_time, end_time, gmt_
 CREATE TABLE success_killed(
     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
     `seckill_id` bigint unsigned NOT NULL COMMENT '秒杀库存id',
-    `product_id` bigint unsigned NOT NULL COMMENT '商品id',
     `user_phone` bigint unsigned NOT NULL COMMENT '用户手机号',
     `state` tinyint NOT NULL DEFAULT -1 COMMENT '状态：-1无效 0成功 1已付款 2已发货',
     `gmt_create` datetime NOT NULL COMMENT '创建时间',
     `gmt_modified` datetime NOT NULL COMMENT '更新时间',
     PRIMARY KEY (`id`),
-    UNIQUE KEY uk_product_id_user_phone(`product_id`, `user_phone`),/*联合唯一约束*/
+    UNIQUE KEY uk_seckill_id_user_phone(`seckill_id`, `user_phone`),/*联合唯一约束*/
     KEY idx_gmt_create(`gmt_create`)
 ) ENGINE=InnoDB AUTO_INCREMENT = 1000 DEFAULT CHARSET = utf8 COMMENT='秒杀成功明细表';
 

@@ -1,4 +1,4 @@
-package org.seckill.domain;
+package org.lhpsn.seckill.domain;
 
 import java.util.Date;
 

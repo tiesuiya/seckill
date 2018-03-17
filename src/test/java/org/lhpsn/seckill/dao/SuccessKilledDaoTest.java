@@ -1,9 +1,9 @@
-package org.seckill.dao;
+package org.lhpsn.seckill.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seckill.domain.Seckill;
-import org.seckill.domain.SuccessKilled;
+import org.lhpsn.seckill.domain.Seckill;
+import org.lhpsn.seckill.domain.SuccessKilled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,15 +31,14 @@ public class SuccessKilledDaoTest {
 
         // 初始化测试参数
         long seckillId = seckill.getId();
-        long productId = seckill.getProductId();
         long userPhone = 13888888888L;
 
         // 第一次插入，预计成功
-        int updateCount = successKilledDao.insertSuccessKilled(seckillId, productId, userPhone);
+        int updateCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
         Assert.isTrue(updateCount > 0, "错误，插入失败");
 
         // 第二次插入，因为业务需要，productId和userPhone不能重复，预计失败
-        updateCount = successKilledDao.insertSuccessKilled(seckillId, productId, userPhone);
+        updateCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
         Assert.isTrue(updateCount == 0, "错误，插入成功");
 
         // TODO 添加事务后此处需要调整，目前手动删除所插入数据success_killed
@@ -56,7 +55,7 @@ public class SuccessKilledDaoTest {
         long productId = seckill.getProductId();
         long userPhone = 13888888888L;
 
-        int updateCount = successKilledDao.insertSuccessKilled(seckillId, productId, userPhone);
+        int updateCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
         Assert.isTrue(updateCount > 0, "错误，插入测试数据失败");
 
         SuccessKilled successKilled = successKilledDao.getSuccessKilledBySeckillId(productId, userPhone);

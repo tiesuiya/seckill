@@ -1,7 +1,7 @@
-package org.seckill.dao;
+package org.lhpsn.seckill.dao;
 
 import org.apache.ibatis.annotations.Param;
-import org.seckill.domain.Seckill;
+import org.lhpsn.seckill.domain.Seckill;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +36,7 @@ public interface SeckillDao {
      *
      * @param offset 偏移量
      * @param limit  条数
-     * @return 秒杀库存对象集合
+     * @return 库存对象集合
      */
     List<Seckill> listSeckillByOffsetAndLimit(@Param("offset") Integer offset, @Param("limit") Integer limit);
 }

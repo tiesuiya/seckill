@@ -1,8 +1,8 @@
-package org.seckill.dao;
+package org.lhpsn.seckill.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.seckill.domain.Seckill;
+import org.lhpsn.seckill.domain.Seckill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
