@@ -87,12 +87,12 @@ public class SeckillServiceImplTest {
     @Test
     public void excuteSeckill() throws Exception {
         // 测试1：错误的md5
+        SeckillExecutionDTO seckillExecutionDTO = null;
         Seckill seckill = SeckillDaoTest.generateTestSeckillDate();
         seckillDao.insertSeckill(seckill);
         long userPhone = 1L;
         long seckillId = seckill.getId();
         String md5 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        SeckillExecutionDTO seckillExecutionDTO = null;
         try {
             // 预计会抛出异常
             seckillExecutionDTO = seckillService.excuteSeckill(seckillId, userPhone, md5);
@@ -102,6 +102,7 @@ public class SeckillServiceImplTest {
         Assert.isNull(seckillExecutionDTO, "错误，md5判断有问题");
 
         // 测试2：订单关闭测试
+        seckillExecutionDTO = null;
         seckill = SeckillDaoTest.generateTestSeckillDate();
         seckill.setEndTime(simpleDateFormat.parse("2018-01-01 00:00:00"));
         seckillDao.insertSeckill(seckill);
