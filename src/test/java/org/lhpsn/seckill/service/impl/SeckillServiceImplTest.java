@@ -30,7 +30,6 @@ public class SeckillServiceImplTest {
     @Autowired
     private SeckillService seckillService;
 
-
     @Test
     public void getSeckillById() {
 
@@ -67,4 +66,5 @@ public class SeckillServiceImplTest {
 
         // TODO 未完成
     }
+
 }

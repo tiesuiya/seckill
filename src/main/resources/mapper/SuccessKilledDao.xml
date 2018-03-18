@@ -3,13 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.lhpsn.seckill.dao.SuccessKilledDao">
     <insert id="insertSuccessKilled">
-        INSERT IGNORE INTO success_killed(seckill_id, product_id, user_phone, state, gmt_create, gmt_modified)
-        VALUES (#{seckillId}, #{productId}, #{userPhone}, 0, NOW(), NOW())
+        INSERT IGNORE INTO success_killed(seckill_id, user_phone, state, gmt_create, gmt_modified)
+        VALUES (#{seckillId}, #{userPhone}, 0, NOW(), NOW())
     </insert>
     <select id="getSuccessKilledBySeckillId" resultType="org.lhpsn.seckill.domain.SuccessKilled">
-        SELECT id, seckill_id, product_id, user_phone, state, gmt_create, gmt_modified
+        SELECT id, seckill_id, user_phone, state, gmt_create, gmt_modified
         FROM success_killed
-        WHERE product_id = #{productId}
+        WHERE seckill_id = #{seckill_id}
         AND user_phone = #{userPhone}
     </select>
 </mapper>
