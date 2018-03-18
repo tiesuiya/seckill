@@ -2,14 +2,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.lhpsn.seckill.dao.SuccessKilledDao">
+    <!-- IGNORE忽略异常 -->
     <insert id="insertSuccessKilled">
         INSERT IGNORE INTO success_killed(seckill_id, user_phone, state, gmt_create, gmt_modified)
         VALUES (#{seckillId}, #{userPhone}, 0, NOW(), NOW())
     </insert>
-    <select id="getSuccessKilledBySeckillId" resultType="org.lhpsn.seckill.domain.SuccessKilled">
+    <select id="getSuccessKilledBySeckillIdAndUserPhone" resultType="org.lhpsn.seckill.domain.SuccessKilled">
         SELECT id, seckill_id, user_phone, state, gmt_create, gmt_modified
         FROM success_killed
-        WHERE seckill_id = #{seckill_id}
+        WHERE seckill_id = #{seckillId}
         AND user_phone = #{userPhone}
     </select>
 </mapper>

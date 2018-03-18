@@ -21,11 +21,11 @@ public interface SuccessKilledDao {
     Integer insertSuccessKilled(@Param("seckillId") Long seckillId, @Param("userPhone") Long userPhone);
 
     /**
-     * 通过商品id查找
+     * 通过商品id和用户手机号查找
      *
      * @param seckillId 库存id
      * @param userPhone 用户手机号
      * @return 秒杀成功明细对象
      */
-    SuccessKilled getSuccessKilledBySeckillId(@Param("seckillId") Long seckillId, @Param("userPhone") Long userPhone);
+    SuccessKilled getSuccessKilledBySeckillIdAndUserPhone(@Param("seckillId") Long seckillId, @Param("userPhone") Long userPhone);
 }

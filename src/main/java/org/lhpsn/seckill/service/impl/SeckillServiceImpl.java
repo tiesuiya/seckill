@@ -75,7 +75,7 @@ public class SeckillServiceImpl implements SeckillService {
      * 2.灵活，不是所有操作都需要事物
      */
     @Transactional
-    public SeckillExecutionDTO excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException, SeckillCloseException, RepeatKillException {
+    public SeckillExecutionDTO excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException {
 
         Date nowTime = new Date();
 
@@ -88,7 +88,7 @@ public class SeckillServiceImpl implements SeckillService {
 
         try {
             // 执行库存更新
-            int updateCount = seckillDao.reduceNumber(seckillId, nowTime);
+            int updateCount = seckillDao.reduceQuantity(seckillId, nowTime);
             if (updateCount <= 0) {
                 throw new SeckillCloseException("seckill is close");
             }
@@ -99,7 +99,7 @@ public class SeckillServiceImpl implements SeckillService {
                 throw new RepeatKillException("seckill is repeat");
             }
 
-            SuccessKilled successKilled = successKilledDao.getSuccessKilledBySeckillId(seckillId, userPhone);
+            SuccessKilled successKilled = successKilledDao.getSuccessKilledBySeckillIdAndUserPhone(seckillId, userPhone);
             return new SeckillExecutionDTO(seckillId, SeckillStateEnum.SUCCESS, successKilled);
         } catch (SeckillCloseException e1) {
             throw e1;

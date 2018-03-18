@@ -15,13 +15,21 @@ import java.util.List;
 public interface SeckillDao {
 
     /**
+     * 插入库存记录
+     *
+     * @param seckill 秒杀对象
+     * @return 受影响行数
+     */
+    Integer insertSeckill(Seckill seckill);
+
+    /**
      * 减库存操作
      *
      * @param id       库存id
      * @param killTime 秒杀时间
      * @return 受影响行数
      */
-    Integer reduceNumber(@Param("id") Long id, @Param("killTime") Date killTime);
+    Integer reduceQuantity(@Param("id") Long id, @Param("killTime") Date killTime);
 
     /**
      * 通过库存id查找

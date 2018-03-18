@@ -48,5 +48,5 @@ public interface SeckillService {
      * @param userPhone 用户手机号
      * @param md5       md5加密措施
      */
-    SeckillExecutionDTO excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException, SeckillCloseException, RepeatKillException;
+    SeckillExecutionDTO excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException;
 }

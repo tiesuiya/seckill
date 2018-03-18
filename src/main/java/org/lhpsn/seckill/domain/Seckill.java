@@ -20,7 +20,7 @@ public class Seckill {
     private String productName;
 
     // 商品库存数量
-    private Integer number;
+    private Integer quantity;
 
     // 秒杀开始时间
     private Date startTime;
@@ -58,12 +58,12 @@ public class Seckill {
         this.productName = productName;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Date getStartTime() {
@@ -104,7 +104,7 @@ public class Seckill {
                 "id=" + id +
                 ", productId=" + productId +
                 ", productName='" + productName + '\'' +
-                ", number=" + number +
+                ", quantity=" + quantity +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", gmtCreate=" + gmtCreate +

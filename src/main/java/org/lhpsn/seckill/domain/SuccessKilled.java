@@ -16,9 +16,6 @@ public class SuccessKilled {
     // 秒杀库存id
     private Long seckillId;
 
-    // 商品id
-    private Long productId;
-
     // 用户手机号
     private Long userPhone;
 
@@ -45,14 +42,6 @@ public class SuccessKilled {
 
     public void setSeckillId(Long seckillId) {
         this.seckillId = seckillId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public Long getUserPhone() {
@@ -92,7 +81,6 @@ public class SuccessKilled {
         return "SuccessKilled{" +
                 "id=" + id +
                 ", seckillId=" + seckillId +
-                ", productId=" + productId +
                 ", userPhone=" + userPhone +
                 ", state=" + state +
                 ", gmtCreate=" + gmtCreate +
