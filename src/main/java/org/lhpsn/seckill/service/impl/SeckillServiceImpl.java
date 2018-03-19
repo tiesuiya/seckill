@@ -2,12 +2,10 @@ package org.lhpsn.seckill.service.impl;
 
 import org.lhpsn.seckill.domain.Seckill;
 import org.lhpsn.seckill.domain.SuccessKilled;
-import org.lhpsn.seckill.enums.SeckillStateEnum;
 import org.lhpsn.seckill.dao.SeckillDao;
 import org.lhpsn.seckill.dao.SuccessKilledDao;
 import org.lhpsn.seckill.dto.ExposerDTO;
-import org.lhpsn.seckill.dto.SeckillExecutionDTO;
-import org.lhpsn.seckill.exception.RepeatKillException;
+import org.lhpsn.seckill.exception.SeckillRepeatException;
 import org.lhpsn.seckill.exception.SeckillCloseException;
 import org.lhpsn.seckill.exception.SeckillException;
 import org.lhpsn.seckill.service.SeckillService;
@@ -75,7 +73,7 @@ public class SeckillServiceImpl implements SeckillService {
      * 2.灵活，不是所有操作都需要事物
      */
     @Transactional
-    public SeckillExecutionDTO excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException {
+    public SuccessKilled excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException {
 
         Date nowTime = new Date();
 
@@ -86,29 +84,19 @@ public class SeckillServiceImpl implements SeckillService {
             throw new SeckillException("seckill data rewrite");
         }
 
-        try {
-            // 执行库存更新
-            int updateCount = seckillDao.reduceQuantity(seckillId, nowTime);
-            if (updateCount <= 0) {
-                throw new SeckillCloseException("seckill is close");
-            }
-
-            // 秒杀成功记录
-            int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
-            if (insertCount <= 0) {
-                throw new RepeatKillException("seckill is repeat");
-            }
-
-            SuccessKilled successKilled = successKilledDao.getSuccessKilledBySeckillIdAndUserPhone(seckillId, userPhone);
-            return new SeckillExecutionDTO(seckillId, SeckillStateEnum.SUCCESS, successKilled);
-        } catch (SeckillCloseException e1) {
-            throw e1;
-        } catch (RepeatKillException e2) {
-            throw e2;
-        } catch (Exception e3) {
-            logger.error(e3.getMessage(), e3);
-            throw new SeckillException("seckill inner error:" + e3.getMessage());
+        // 执行库存更新
+        int updateCount = seckillDao.reduceQuantity(seckillId, nowTime);
+        if (updateCount <= 0) {
+            throw new SeckillCloseException("seckill is close");
         }
+
+        // 秒杀成功记录
+        int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
+        if (insertCount <= 0) {
+            throw new SeckillRepeatException("seckill is repeat");
+        }
+
+        return successKilledDao.getSuccessKilledBySeckillIdAndUserPhone(seckillId, userPhone);
     }
 
     private String getMD5(Long seckillId) {

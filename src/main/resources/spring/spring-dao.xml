@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    <!-- 1.读配置文件 -->
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 1.加载配置文件 -->
     <context:property-placeholder location="classpath*:jdbc.properties"/>
 
     <!-- 2.数据源 -->
@@ -24,7 +28,7 @@
           p:checkoutTimeout="${jdbc.c3p0.checkoutTimeout}"
           p:acquireRetryAttempts="${jdbc.c3p0.acquireRetryAttempts}"/>
 
-    <!-- 3.配置SqlSessionFactory对象 -->
+    <!-- 3.SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 注入连接池 -->
         <property name="dataSource" ref="dataSource"/>
@@ -36,7 +40,7 @@
         <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
     </bean>
 
-    <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+    <!-- 4.扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 注入sqlSessionFactory -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>

@@ -7,10 +7,6 @@ import org.lhpsn.seckill.dao.SeckillDaoTest;
 import org.lhpsn.seckill.domain.Seckill;
 import org.lhpsn.seckill.domain.SuccessKilled;
 import org.lhpsn.seckill.dto.ExposerDTO;
-import org.lhpsn.seckill.dto.SeckillExecutionDTO;
-import org.lhpsn.seckill.enums.SeckillStateEnum;
-import org.lhpsn.seckill.exception.RepeatKillException;
-import org.lhpsn.seckill.exception.SeckillCloseException;
 import org.lhpsn.seckill.exception.SeckillException;
 import org.lhpsn.seckill.service.SeckillService;
 import org.slf4j.Logger;
@@ -23,11 +19,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
-
-import static org.junit.Assert.*;
 
 /**
  * @author lh
@@ -87,7 +79,7 @@ public class SeckillServiceImplTest {
     @Test
     public void excuteSeckill() throws Exception {
         // 测试1：错误的md5
-        SeckillExecutionDTO seckillExecutionDTO = null;
+        SuccessKilled seckillExecutionDTO = null;
         Seckill seckill = SeckillDaoTest.generateTestSeckillDate();
         seckillDao.insertSeckill(seckill);
         long userPhone = 1L;
@@ -119,7 +111,7 @@ public class SeckillServiceImplTest {
 
         // 测试3：订单重复测试
         seckillExecutionDTO = null;
-        SeckillExecutionDTO seckillExecutionDTORepeat = null;
+        SuccessKilled seckillExecutionDTORepeat = null;
         seckill = SeckillDaoTest.generateTestSeckillDate();
         seckillDao.insertSeckill(seckill);
         seckillId = seckill.getId();
@@ -142,12 +134,12 @@ public class SeckillServiceImplTest {
         userPhone = 4L;
         md5 = getMD5(seckillId);
         try {
-            // 预计会抛出异常
+            // 预计不会会抛出异常
             seckillExecutionDTO = seckillService.excuteSeckill(seckillId, userPhone, md5);
         } catch (SeckillException e) {
             // 不进行任何操作，只是为了保证程序往下执行
         }
-        Assert.isTrue(SeckillStateEnum.SUCCESS.getState().equals(seckillExecutionDTO.getState()), "错误，秒杀失败");
+        Assert.notNull(seckillExecutionDTO, "错误，秒杀失败");
     }
 
     private String getMD5(Long seckillId) {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 包扫描 -->
+    <context:component-scan base-package="org.lhpsn.seckill.config"/>
+    <context:component-scan base-package="org.lhpsn.seckill.controller"/>
+
+    <!-- 支持注解，自动注册RequestMappingHandlerMapping与RequestMappingHandlerAdapter两个Bean -->
+    <mvc:annotation-driven/>
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 启用默认servlet，当dispatcherServlet找不到路由，继续找静态文件。-->
+    <!--另一种方式是<mvc:resources mapping="/public/**" location="/public/" />，这样的配置会自动优化缓存静态文件 -->
+    <mvc:default-servlet-handler/>
+</beans>

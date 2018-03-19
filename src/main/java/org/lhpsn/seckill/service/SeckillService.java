@@ -1,10 +1,8 @@
 package org.lhpsn.seckill.service;
 
 import org.lhpsn.seckill.domain.Seckill;
+import org.lhpsn.seckill.domain.SuccessKilled;
 import org.lhpsn.seckill.dto.ExposerDTO;
-import org.lhpsn.seckill.dto.SeckillExecutionDTO;
-import org.lhpsn.seckill.exception.RepeatKillException;
-import org.lhpsn.seckill.exception.SeckillCloseException;
 import org.lhpsn.seckill.exception.SeckillException;
 
 import java.util.List;
@@ -42,11 +40,14 @@ public interface SeckillService {
     ExposerDTO exportSeckillUrl(Long seckillId);
 
     /**
+     *
      * 执行秒杀
      *
      * @param seckillId 库存id
      * @param userPhone 用户手机号
      * @param md5       md5加密措施
+     * @return 秒杀成功明细实体
+     * @throws SeckillException 秒杀异常
      */
-    SeckillExecutionDTO excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException;
+    SuccessKilled excuteSeckill(Long seckillId, Long userPhone, String md5) throws SeckillException ;
 }

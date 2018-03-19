@@ -9,7 +9,7 @@ import org.lhpsn.seckill.enums.SeckillStateEnum;
  * @author lh
  * @since 1.0.0
  */
-public class SeckillExecutionDTO {
+public class ExecutionDTO {
 
     // 秒杀库存id
     private Long seckillId;
@@ -23,11 +23,17 @@ public class SeckillExecutionDTO {
     // 秒杀成功对象
     private SuccessKilled successKilled;
 
-    public SeckillExecutionDTO(Long seckillId, SeckillStateEnum seckillStateEnum, SuccessKilled successKilled) {
+    public ExecutionDTO(Long seckillId, SeckillStateEnum seckillStateEnum, SuccessKilled successKilled) {
         this.seckillId = seckillId;
         this.state = seckillStateEnum.getState();
         this.stateInfo = seckillStateEnum.getStateInfo();
         this.successKilled = successKilled;
+    }
+
+    public ExecutionDTO(Long seckillId, SeckillStateEnum seckillStateEnum) {
+        this.seckillId = seckillId;
+        this.state = seckillStateEnum.getState();
+        this.stateInfo = seckillStateEnum.getStateInfo();
     }
 
     public Long getSeckillId() {
