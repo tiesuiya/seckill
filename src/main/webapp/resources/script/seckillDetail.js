@@ -100,9 +100,7 @@ var seckillDetail = {
             // 执行秒杀请求
             // 禁用按钮
             $(this).addClass("disabled");
-            var userPhone = $.cookie('userPhone');
             $.post(seckillDetail.URL.execution(seckillId), {
-                userPhone: userPhone,
                 md5: md5
             }, function (result) {
                 if (result && result['success']) {
@@ -121,10 +119,12 @@ var seckillDetail = {
     },
     /**
      * 页面逻辑入口
-     * @param params 必要参数
+     * @param seckillId 库存id
+     * @param startTime 开始时间
+     * @param endTime 结束时间
      */
     init: function (seckillId, startTime, endTime) {
-        var userPhone = $.cookie('userPhone');
+        var userPhone = $.cookie('USER_PHONE');
 
         // 判断登录
         if (!seckillDetail.validatePhone(userPhone)) {
@@ -138,7 +138,7 @@ var seckillDetail = {
             $('#killPhoneBtn').click(function () {
                 var inputPhone = $('#killPhoneKey').val();
                 if (seckillDetail.validatePhone(inputPhone)) {
-                    $.cookie('userPhone', inputPhone, {expires: 7, path: '/seckills'})
+                    $.cookie('USER_PHONE', inputPhone, {expires: 7, path: '/seckills'})
                     window.location.reload();
                 } else {
                     $('#killPhoneMessage').hide().html('<lable class="label label-danger">手机号错误！</lable>').show(320);

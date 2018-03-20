@@ -62,7 +62,7 @@ public class SeckillController {
     @PostMapping(value = "/seckills/{id}/execution")
     @ResponseBody
     public WebDTO<ExecutionDTO> doExecution(@PathVariable("id") Long id,
-                                            @RequestParam(name = "userPhone", required = false) Long userPhone,
+                                            @CookieValue(name = "USER_PHONE", required = false) Long userPhone,
                                             @RequestParam(name = "md5", required = false) String md5) {
         // 手动验证参数
         // 由于使用了页面返回+json返回的形式，这里不好使用ControllerAdvice来作全局异常处理，故先使用手动验证。
