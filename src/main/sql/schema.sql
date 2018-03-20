@@ -25,9 +25,9 @@ CREATE TABLE seckill(
 ) ENGINE=InnoDB AUTO_INCREMENT = 1000 DEFAULT CHARSET = utf8 COMMENT='秒杀库存表';
 
 -- 初始化数据
-INSERT INTO seckill(product_id, product_name, quantity, start_time, end_time, gmt_create, gmt_modified) values(10001, '1000元秒杀三星S7 edge',100,'2018-03-16 11:30:00','2018-03-16 12:00:00','2018-03-16 11:30:00','2018-03-16 11:30:00');
-INSERT INTO seckill(product_id, product_name, quantity, start_time, end_time, gmt_create, gmt_modified) values(10002, '1500元秒杀ipad2 mini',150,'2018-03-16 11:30:00','2018-03-16 12:00:00','2018-03-16 11:30:00','2018-03-16 11:30:00');
-INSERT INTO seckill(product_id, product_name, quantity, start_time, end_time, gmt_create, gmt_modified) values(10003, '2500元秒杀小米6',200,'2018-03-16 11:30:00','2018-03-16 12:00:00','2018-03-16 11:30:00','2018-03-16 11:30:00');
+INSERT INTO seckill(product_id, product_name, quantity, start_time, end_time, gmt_create, gmt_modified) values(10001, '1000元秒杀三星S7 edge',100,'2017-03-16 11:30:00','2017-03-17 23:00:00','2017-01-10 11:30:00','2017-01-10 11:30:00');
+INSERT INTO seckill(product_id, product_name, quantity, start_time, end_time, gmt_create, gmt_modified) values(10002, '1500元秒杀ipad2 mini',150,'2018-03-16 11:30:00','2018-04-16 12:00:00','2017-01-10 11:30:00','2017-01-10 11:30:00');
+INSERT INTO seckill(product_id, product_name, quantity, start_time, end_time, gmt_create, gmt_modified) values(10003, '2500元秒杀小米6',200,'2019-03-16 11:30:00','2019-03-17 12:00:00','2017-01-10 11:30:00','2017-01-10 11:30:00');
 
 -- 秒杀成功明细表
 CREATE TABLE success_killed(

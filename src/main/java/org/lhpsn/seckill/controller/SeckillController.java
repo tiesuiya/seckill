@@ -6,17 +6,16 @@ import org.lhpsn.seckill.dto.ExecutionDTO;
 import org.lhpsn.seckill.dto.ExposerDTO;
 import org.lhpsn.seckill.dto.WebDTO;
 import org.lhpsn.seckill.enums.SeckillStateEnum;
+import org.lhpsn.seckill.exception.SeckillCloseException;
 import org.lhpsn.seckill.exception.SeckillMd5Exception;
 import org.lhpsn.seckill.exception.SeckillRepeatException;
-import org.lhpsn.seckill.exception.SeckillCloseException;
-import org.lhpsn.seckill.param.SeckillParam;
 import org.lhpsn.seckill.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +33,6 @@ public class SeckillController {
 
     @GetMapping(value = "/seckills")
     public String listSeckills(Model model) {
-        // TODO 分页返回
         List<Seckill> seckills = seckillService.listSeckillByOffsetAndLimit(0, 100);
         model.addAttribute("list", seckills);
         return "seckill/list";
@@ -63,12 +61,24 @@ public class SeckillController {
 
     @PostMapping(value = "/seckills/{id}/execution")
     @ResponseBody
-    public WebDTO<ExecutionDTO> doExecution(@PathVariable("id") Long id, @Valid SeckillParam seckillParam) {
+    public WebDTO<ExecutionDTO> doExecution(@PathVariable("id") Long id,
+                                            @RequestParam(name = "userPhone", required = false) Long userPhone,
+                                            @RequestParam(name = "md5", required = false) String md5) {
+        // 手动验证参数
+        // 由于使用了页面返回+json返回的形式，这里不好使用ControllerAdvice来作全局异常处理，故先使用手动验证。
+        // 注意：接收参数的@RequestParam如果默认为true，错误调用时会直接返回页面型错误，不方便调用方开发。
+        if (userPhone == null || userPhone < 13000000000L) {
+            return new WebDTO<ExecutionDTO>().failure("手机号码有误！");
+        }
+        if (StringUtils.isEmpty(md5)) {
+            return new WebDTO<ExecutionDTO>().failure("md5不能为空！");
+        }
+
         ExecutionDTO executionDTO;
         SuccessKilled successKilled = null;
         // 业务异常需要自己处理，没办法，暂时想不到更优雅的方式
         try {
-            successKilled = seckillService.excuteSeckill(id, seckillParam.getUserPhone(), seckillParam.getMd5());
+            successKilled = seckillService.excuteSeckill(id, userPhone, md5);
             executionDTO = new ExecutionDTO(id, SeckillStateEnum.SUCCESS, successKilled);
         } catch (SeckillCloseException e) {
             executionDTO = new ExecutionDTO(id, SeckillStateEnum.CLOSE, successKilled);

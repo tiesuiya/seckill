@@ -8,7 +8,7 @@ package org.lhpsn.seckill.dto;
  */
 public class WebDTO<T> {
 
-    // 执行结果
+    // 执行结果，如果为false，说明客户端调用错误
     private Boolean success;
 
     // 业务数据
@@ -23,7 +23,7 @@ public class WebDTO<T> {
         return this;
     }
 
-    public WebDTO failure(String error) {
+    public WebDTO<T> failure(String error) {
         this.success = false;
         this.error = error;
         return this;

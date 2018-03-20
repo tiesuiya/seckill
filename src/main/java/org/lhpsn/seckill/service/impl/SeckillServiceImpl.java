@@ -5,6 +5,7 @@ import org.lhpsn.seckill.domain.SuccessKilled;
 import org.lhpsn.seckill.dao.SeckillDao;
 import org.lhpsn.seckill.dao.SuccessKilledDao;
 import org.lhpsn.seckill.dto.ExposerDTO;
+import org.lhpsn.seckill.exception.SeckillMd5Exception;
 import org.lhpsn.seckill.exception.SeckillRepeatException;
 import org.lhpsn.seckill.exception.SeckillCloseException;
 import org.lhpsn.seckill.exception.SeckillException;
@@ -81,7 +82,7 @@ public class SeckillServiceImpl implements SeckillService {
 
         // md5判断
         if (md5 == null || !md5.equals(getMD5(seckillId))) {
-            throw new SeckillException("seckill data rewrite");
+            throw new SeckillMd5Exception("seckill data rewrite");
         }
 
         // 执行库存更新
