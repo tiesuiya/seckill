@@ -49,7 +49,7 @@ public class SeckillServiceImpl implements SeckillService {
     /**
      * md5盐值字段，用于混淆md5
      */
-    public final static String MD5_SALT = "weB(o8fy95f4ew*&O(yfdsi5546*%%^%(*&G3F";
+    private final static String MD5_SALT = "weB(o8fy95f4ew*&O(yfdsi5546*%%^%(*&G3F";
 
 
     @Override
