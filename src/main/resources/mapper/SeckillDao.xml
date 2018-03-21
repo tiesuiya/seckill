@@ -28,5 +28,15 @@
         ORDER BY gmt_create DESC
         limit #{offset}, #{limit}
     </select>
+    <!-- MyBatis调用存储过程 -->
+    <select id="killByProcedure" statementType="CALLABLE">
+        call execute_seckill(
+          #{seckillId,jdbcType=BIGINT,mode=IN},
+          #{userPhone,jdbcType=BIGINT,mode=IN},
+          #{killTime,jdbcType=DATE,mode=IN},
+          #{result,jdbcType=INTEGER,mode=OUT}
+        )
+    </select>
+
 </mapper>
         

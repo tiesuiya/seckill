@@ -10,22 +10,34 @@ import java.util.Date;
  */
 public class SuccessKilled {
 
-    // id
+    /**
+     * id
+     */
     private Long id;
 
-    // 秒杀库存id
+    /**
+     * 秒杀库存id
+     */
     private Long seckillId;
 
-    // 用户手机号
+    /**
+     * 用户手机号
+     */
     private Long userPhone;
 
-    // 状态：-1无效 0成功 1已付款 2已发货
+    /**
+     * 状态：-1无效 0成功 1已付款 2已发货
+     */
     private Integer state;
 
-    // 数据创建时间
+    /**
+     * 数据创建时间
+     */
     private Date gmtCreate;
 
-    // 数据更新时间
+    /**
+     * 数据更新时间
+     */
     private Date gmtModified;
 
     public Long getId() {

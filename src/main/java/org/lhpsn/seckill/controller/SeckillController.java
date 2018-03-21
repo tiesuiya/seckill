@@ -67,13 +67,16 @@ public class SeckillController {
         // 手动验证参数
         // 由于使用了页面返回+json返回的形式，这里不好使用ControllerAdvice来作全局异常处理，故先使用手动验证。
         // 注意：接收参数的@RequestParam如果默认为true，错误调用时会直接返回页面型错误，不方便调用方开发。
-        if (userPhone == null || userPhone < 13000000000L) {
+        // 手机号码长度
+        int length = 11;
+        if (userPhone == null || String.valueOf(userPhone).length() != length) {
             return new WebDTO<ExecutionDTO>().failure("手机号码有误！");
         }
         if (StringUtils.isEmpty(md5)) {
             return new WebDTO<ExecutionDTO>().failure("md5不能为空！");
         }
 
+        // 客户端事务控制秒杀
         ExecutionDTO executionDTO;
         SuccessKilled successKilled = null;
         // 业务异常需要自己处理，没办法，暂时想不到更优雅的方式
@@ -90,6 +93,10 @@ public class SeckillController {
             executionDTO = new ExecutionDTO(id, SeckillStateEnum.INNER_ERROR, successKilled);
         }
         return new WebDTO<ExecutionDTO>().success(executionDTO);
+
+        // 存储过程控制秒杀
+        // ExecutionDTO executionDTO = seckillService.excuteSeckillProcedure(id, userPhone, md5);
+        // return new WebDTO<ExecutionDTO>().success(executionDTO);
     }
 
 }

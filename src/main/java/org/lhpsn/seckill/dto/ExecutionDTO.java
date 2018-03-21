@@ -11,16 +11,24 @@ import org.lhpsn.seckill.enums.SeckillStateEnum;
  */
 public class ExecutionDTO {
 
-    // 秒杀库存id
+    /**
+     * 秒杀库存id
+     */
     private Long seckillId;
 
-    // 状态：0失败 1成功
+    /**
+     * 状态，对应枚举状态值
+     */
     private Integer state;
 
-    // 状态消息
+    /**
+     * 状态消息
+     */
     private String stateInfo;
 
-    // 秒杀成功对象
+    /**
+     * 秒杀成功对象
+     */
     private SuccessKilled successKilled;
 
     public ExecutionDTO(Long seckillId, SeckillStateEnum seckillStateEnum, SuccessKilled successKilled) {
@@ -66,5 +74,15 @@ public class ExecutionDTO {
 
     public void setSuccessKilled(SuccessKilled successKilled) {
         this.successKilled = successKilled;
+    }
+
+    @Override
+    public String toString() {
+        return "ExecutionDTO{" +
+                "seckillId=" + seckillId +
+                ", state=" + state +
+                ", stateInfo='" + stateInfo + '\'' +
+                ", successKilled=" + successKilled +
+                '}';
     }
 }

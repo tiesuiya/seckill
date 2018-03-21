@@ -6,7 +6,9 @@ import org.lhpsn.seckill.dao.SeckillDao;
 import org.lhpsn.seckill.dao.SeckillDaoTest;
 import org.lhpsn.seckill.domain.Seckill;
 import org.lhpsn.seckill.domain.SuccessKilled;
+import org.lhpsn.seckill.dto.ExecutionDTO;
 import org.lhpsn.seckill.dto.ExposerDTO;
+import org.lhpsn.seckill.enums.SeckillStateEnum;
 import org.lhpsn.seckill.exception.SeckillException;
 import org.lhpsn.seckill.service.SeckillService;
 import org.slf4j.Logger;
@@ -22,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
+ * 秒杀服务测试
+ *
  * @author lh
  * @since 1.0.0
  */
@@ -29,6 +33,7 @@ import java.util.List;
 @ContextConfiguration({
         "classpath:spring/spring-dao.xml",
         "classpath:spring/spring-service.xml"})
+// 在测试中发现，当测试方法被@Transactional标记时，事务所涉及的数据库资源只有在RunAfterTestMethodCallbacks类的evaluate方法调用后才被释放。
 @Transactional
 public class SeckillServiceImplTest {
 
@@ -43,7 +48,7 @@ public class SeckillServiceImplTest {
     private SeckillDao seckillDao;
 
     @Test
-    public void getSeckillById() throws Exception {
+    public void testGetSeckillById() throws Exception {
         Seckill seckill = SeckillDaoTest.generateTestSeckillDate();
         seckillDao.insertSeckill(seckill);
 
@@ -53,7 +58,7 @@ public class SeckillServiceImplTest {
     }
 
     @Test
-    public void listSeckillByOffsetAndLimit() throws Exception {
+    public void testListSeckillByOffsetAndLimit() throws Exception {
         Seckill seckill = SeckillDaoTest.generateTestSeckillDate();
         seckillDao.insertSeckill(seckill);
 
@@ -62,7 +67,7 @@ public class SeckillServiceImplTest {
     }
 
     @Test
-    public void exportSeckillUrl() throws Exception {
+    public void testExportSeckillUrl() throws Exception {
         Seckill seckill = SeckillDaoTest.generateTestSeckillDate();
         seckillDao.insertSeckill(seckill);
 
@@ -77,7 +82,7 @@ public class SeckillServiceImplTest {
     }
 
     @Test
-    public void excuteSeckill() throws Exception {
+    public void testExcuteSeckill() throws Exception {
         // 测试1：错误的md5
         SuccessKilled seckillExecutionDTO = null;
         Seckill seckill = SeckillDaoTest.generateTestSeckillDate();
@@ -140,6 +145,55 @@ public class SeckillServiceImplTest {
             // 不进行任何操作，只是为了保证程序往下执行
         }
         Assert.notNull(seckillExecutionDTO, "错误，秒杀失败");
+    }
+
+    @Test
+    public void testExcuteSeckillProcedure() throws Exception {
+        // 测试1：错误的md5
+        ExecutionDTO executionDTO = null;
+        Seckill seckill = SeckillDaoTest.generateTestSeckillDate();
+        seckillDao.insertSeckill(seckill);
+        long userPhone = 1L;
+        long seckillId = seckill.getId();
+        String md5 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        // 预计会抛出异常
+        executionDTO = seckillService.excuteSeckillProcedure(seckillId, userPhone, md5);
+        Assert.isTrue(SeckillStateEnum.DATA_REWRITE.getState().equals(executionDTO.getState()), "错误，md5判断有问题");
+
+        // 测试2：订单关闭测试
+        executionDTO = null;
+        seckill = SeckillDaoTest.generateTestSeckillDate();
+        seckill.setEndTime(simpleDateFormat.parse("2018-01-01 00:00:00"));
+        seckillDao.insertSeckill(seckill);
+        seckillId = seckill.getId();
+        userPhone = 2L;
+        md5 = getMD5(seckillId);
+        // 预计会抛出异常
+        executionDTO = seckillService.excuteSeckillProcedure(seckillId, userPhone, md5);
+        Assert.isTrue(SeckillStateEnum.CLOSE.getState().equals(executionDTO.getState()), "错误，订单关闭判断有问题");
+
+        // 测试3：订单重复测试
+        executionDTO = null;
+        ExecutionDTO executionDTORepeat = null;
+        seckill = SeckillDaoTest.generateTestSeckillDate();
+        seckillDao.insertSeckill(seckill);
+        seckillId = seckill.getId();
+        userPhone = 3L;
+        md5 = getMD5(seckillId);
+        // 预计会抛出异常
+        executionDTO = seckillService.excuteSeckillProcedure(seckillId, userPhone, md5);
+        executionDTORepeat = seckillService.excuteSeckillProcedure(seckillId, userPhone, md5);
+        Assert.isTrue(SeckillStateEnum.REPEAT.getState().equals(executionDTORepeat.getState()), "错误，订单重复判断有问题");
+
+        // 测试4：正常流程测试
+        executionDTO = null;
+        seckill = SeckillDaoTest.generateTestSeckillDate();
+        seckillDao.insertSeckill(seckill);
+        seckillId = seckill.getId();
+        userPhone = 4L;
+        md5 = getMD5(seckillId);
+        executionDTO = seckillService.excuteSeckillProcedure(seckillId, userPhone, md5);
+        Assert.isTrue(SeckillStateEnum.SUCCESS.getState().equals(executionDTO.getState()), "错误，秒杀失败");
     }
 
     private String getMD5(Long seckillId) {

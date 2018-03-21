@@ -8,8 +8,10 @@ package org.lhpsn.seckill.enums;
  */
 public enum SeckillStateEnum {
 
+    // ？
     SUCCESS(1, "秒杀成功"),
-    CLOSE(0, "秒杀结束"),
+    // 秒杀未开始、秒杀已结束、被秒光了均可以理解为秒杀关闭
+    CLOSE(0, "秒杀关闭"),
     REPEAT(-1, "重复秒杀"),
     DATA_REWRITE(-2, "数据篡改"),
     INNER_ERROR(-3, "系统异常");

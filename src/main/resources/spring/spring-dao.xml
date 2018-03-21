@@ -47,4 +47,10 @@
         <!-- 给出需要扫描Dao接口包 -->
         <property name="basePackage" value="org.lhpsn.seckill.dao"/>
     </bean>
+
+    <!-- redis注入 -->
+    <bean id="redisDao" class="org.lhpsn.seckill.dao.cache.RedisDao">
+        <constructor-arg index="0" value="${redis.ip}"/>
+        <constructor-arg index="1" value="${redis.port}"/>
+    </bean>
 </beans>

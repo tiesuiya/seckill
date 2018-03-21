@@ -5,6 +5,7 @@ import org.lhpsn.seckill.domain.Seckill;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 秒杀库存dao接口
@@ -47,4 +48,11 @@ public interface SeckillDao {
      * @return 库存对象集合
      */
     List<Seckill> listSeckillByOffsetAndLimit(@Param("offset") Integer offset, @Param("limit") Integer limit);
+
+    /**
+     * 秒杀存储过程
+     *
+     * @param params 调用存储过程参数
+     */
+    void killByProcedure(Map<String, Object> params);
 }

@@ -10,28 +10,44 @@ import java.util.Date;
  */
 public class Seckill {
 
-    // id
+    /**
+     * id
+     */
     private Long id;
 
-    // 商品id
+    /**
+     * 商品id
+     */
     private Long productId;
 
-    // 商品名称
+    /**
+     * 商品名称
+     */
     private String productName;
 
-    // 商品库存数量
+    /**
+     * 商品库存数量
+     */
     private Integer quantity;
 
-    // 秒杀开始时间
+    /**
+     * 秒杀开始时间
+     */
     private Date startTime;
 
-    // 秒杀结束时间
+    /**
+     * 秒杀结束时间
+     */
     private Date endTime;
 
-    // 数据创建时间
+    /**
+     * 数据创建时间
+     */
     private Date gmtCreate;
 
-    // 数据更新时间
+    /**
+     * 数据更新时间
+     */
     private Date gmtModified;
 
     public Long getId() {

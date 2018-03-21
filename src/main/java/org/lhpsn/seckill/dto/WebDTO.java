@@ -8,13 +8,19 @@ package org.lhpsn.seckill.dto;
  */
 public class WebDTO<T> {
 
-    // 执行结果，如果为false，说明客户端调用错误
+    /**
+     * 执行结果，如果为false，说明客户端调用错误
+     */
     private Boolean success;
 
-    // 业务数据
+    /**
+     * 业务数据
+     */
     private T data;
 
-    // 错误信息
+    /**
+     * 错误信息
+     */
     private String error;
 
     public WebDTO<T> success(T data) {
@@ -51,5 +57,14 @@ public class WebDTO<T> {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    @Override
+    public String toString() {
+        return "WebDTO{" +
+                "success=" + success +
+                ", data=" + data +
+                ", error='" + error + '\'' +
+                '}';
     }
 }

@@ -10,23 +10,40 @@ import java.util.Date;
  */
 public class ExposerDTO {
 
-    // 是否开启秒杀
+    /**
+     * 是否开启秒杀
+     */
     private Boolean exposed;
 
-    // 一种加密措施
+    /**
+     * 一种加密措施
+     */
     private String md5;
 
-    // 库存id
+    /**
+     * 库存id
+     */
     private Long seckillId;
 
-    // 系统当前时间（ms）
+    /**
+     * 系统当前时间（ms）
+     */
     private Date now;
 
-    // 开启时间
+    /**
+     * 开启时间
+     */
     private Date start;
 
-    // 结束时间
+    /**
+     * 结束时间
+     */
     private Date end;
+
+    public ExposerDTO(Boolean exposed, Long seckillId) {
+        this.exposed = exposed;
+        this.seckillId = seckillId;
+    }
 
     public ExposerDTO(Boolean exposed, String md5, Long seckillId, Date now, Date start, Date end) {
         this.exposed = exposed;
@@ -83,5 +100,17 @@ public class ExposerDTO {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    @Override
+    public String toString() {
+        return "ExposerDTO{" +
+                "exposed=" + exposed +
+                ", md5='" + md5 + '\'' +
+                ", seckillId=" + seckillId +
+                ", now=" + now +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
     }
 }
