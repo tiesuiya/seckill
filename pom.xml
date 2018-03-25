@@ -156,4 +156,20 @@
     <build>
         <finalName>seckill</finalName>
     </build>
+
+    <!-- 限定jdk版本 -->
+    <profiles>
+        <profile>
+            <id>jdk-1.7</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>1.7</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.source>1.7</maven.compiler.source>
+                <maven.compiler.target>1.7</maven.compiler.target>
+                <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+    </profiles>
 </project>
