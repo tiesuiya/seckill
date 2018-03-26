@@ -100,8 +100,6 @@ var seckillDetail = {
             // 执行秒杀请求
             // 禁用按钮
             $(this).addClass("disabled");
-
-            console.log(1234);
             $.ajax({
                 type: "post",
                 url: seckillDetail.URL.execution(seckillId),
