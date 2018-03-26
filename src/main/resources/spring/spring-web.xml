@@ -23,6 +23,6 @@
     </bean>
 
     <!-- 启用默认servlet，当dispatcherServlet找不到路由，继续找静态文件。-->
-    <!--另一种方式是<mvc:resources mapping="/public/**" location="/public/" />，这样的配置会自动优化缓存静态文件 -->
+    <!--另一种方式是<mvc:resources mapping="/resources/**" location="/public/" />，这样的配置会自动优化缓存静态文件 -->
     <mvc:default-servlet-handler/>
 </beans>

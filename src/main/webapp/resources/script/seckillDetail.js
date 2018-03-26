@@ -100,18 +100,28 @@ var seckillDetail = {
             // 执行秒杀请求
             // 禁用按钮
             $(this).addClass("disabled");
-            $.post(seckillDetail.URL.execution(seckillId), {
-                md5: md5
-            }, function (result) {
-                if (result && result['success']) {
-                    var killResult = result['data'];
-                    console.log(killResult);
-                    var state = killResult['state'];
-                    var stateInfo = killResult['stateInfo'];
-                    node.html('<span class="label label-success">' + stateInfo + '</span>');
-                } else {
-                    // 接口调用方问题，给程序员看的
-                    console.log('result:' + result);
+
+            console.log(1234);
+            $.ajax({
+                type: "post",
+                url: seckillDetail.URL.execution(seckillId),
+                dataType: "json",
+                data: JSON.stringify({
+                    "md5": md5,
+                    "userPhone": $.cookie('USER_PHONE')
+                }),
+                headers: {'Content-Type': 'application/json'},
+                success: function (result) {
+                    if (result && result['success']) {
+                        var killResult = result['data'];
+                        console.log(killResult);
+                        var state = killResult['state'];
+                        var stateInfo = killResult['stateInfo'];
+                        node.html('<span class="label label-success">' + stateInfo + '</span>');
+                    } else {
+                        // 接口调用方问题，给程序员看的
+                        console.log('result:' + result);
+                    }
                 }
             });
         });
