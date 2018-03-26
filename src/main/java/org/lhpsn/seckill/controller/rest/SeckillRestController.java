@@ -1,10 +1,12 @@
-package org.lhpsn.seckill.controller;
+package org.lhpsn.seckill.controller.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.lhpsn.seckill.advice.RestControllerExceptionAdvice;
 import org.lhpsn.seckill.domain.SuccessKilled;
 import org.lhpsn.seckill.dto.ExecutionDTO;
 import org.lhpsn.seckill.dto.ExposerDTO;
-import org.lhpsn.seckill.dto.WebDTO;
+import org.lhpsn.seckill.dto.common.ResponseDTO;
 import org.lhpsn.seckill.enums.SeckillStateEnum;
 import org.lhpsn.seckill.exception.SeckillCloseException;
 import org.lhpsn.seckill.exception.SeckillMd5Exception;
@@ -23,27 +25,31 @@ import java.util.Date;
  * @author lh
  * @since 1.0.0
  */
+@Api(value = "秒杀接口")
 @RestController
 public class SeckillRestController extends RestControllerExceptionAdvice {
 
     @Autowired
     private SeckillService seckillService;
 
+    @ApiOperation(value = "获取系统时间")
     @GetMapping(value = "/time/now")
-    public WebDTO<Long> getSystemTime() {
+    public ResponseDTO<Long> getSystemTime() {
         Date now = new Date();
-        return new WebDTO<Long>().success(now.getTime());
+        return new ResponseDTO<Long>().success(now.getTime());
     }
 
+    @ApiOperation(value = "获取秒杀地址")
     @GetMapping(value = "/seckills/{id}/exposer")
-    public WebDTO<ExposerDTO> getExposer(@PathVariable("id") Long id) {
+    public ResponseDTO<ExposerDTO> getExposer(@PathVariable("id") Long id) {
         ExposerDTO exposerDTO = seckillService.exportSeckillUrl(id);
-        return new WebDTO<ExposerDTO>().success(exposerDTO);
+        return new ResponseDTO<ExposerDTO>().success(exposerDTO);
     }
 
+    @ApiOperation(value = "执行秒杀")
     @PostMapping(value = "/seckills/{id}/execution")
-    public WebDTO<ExecutionDTO> doExecution(@PathVariable("id") Long id,
-                                            @RequestBody @Valid ExecutionRequestDTO param) {
+    public ResponseDTO<ExecutionDTO> doExecution(@PathVariable("id") Long id,
+                                                 @RequestBody @Valid ExecutionRequestDTO param) {
         // 客户端事务控制秒杀
         ExecutionDTO executionDTO;
         SuccessKilled successKilled = null;
@@ -60,7 +66,7 @@ public class SeckillRestController extends RestControllerExceptionAdvice {
         } catch (Exception e) {
             executionDTO = new ExecutionDTO(id, SeckillStateEnum.INNER_ERROR, successKilled);
         }
-        return new WebDTO<ExecutionDTO>().success(executionDTO);
+        return new ResponseDTO<ExecutionDTO>().success(executionDTO);
 
         // 存储过程控制秒杀
         // ExecutionDTO executionDTO = seckillService.excuteSeckillProcedure(id, userPhone, md5);

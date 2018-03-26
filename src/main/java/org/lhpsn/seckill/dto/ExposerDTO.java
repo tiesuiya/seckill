@@ -1,5 +1,8 @@
 package org.lhpsn.seckill.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
@@ -8,36 +11,25 @@ import java.util.Date;
  * @author lh
  * @since 1.0.0
  */
+@ApiModel(value = "暴露秒杀地址DTO")
 public class ExposerDTO {
 
-    /**
-     * 是否开启秒杀
-     */
+    @ApiModelProperty(value = "是否开启秒杀")
     private Boolean exposed;
 
-    /**
-     * 一种加密措施
-     */
+    @ApiModelProperty(value = "md5加密串")
     private String md5;
 
-    /**
-     * 库存id
-     */
+    @ApiModelProperty(value = "库存id")
     private Long seckillId;
 
-    /**
-     * 系统当前时间（ms）
-     */
+    @ApiModelProperty(value = "系统当前时间（ms）")
     private Date now;
 
-    /**
-     * 开启时间
-     */
+    @ApiModelProperty(value = "开启时间")
     private Date start;
 
-    /**
-     * 结束时间
-     */
+    @ApiModelProperty(value = "结束时间")
     private Date end;
 
     public ExposerDTO(Boolean exposed, Long seckillId) {

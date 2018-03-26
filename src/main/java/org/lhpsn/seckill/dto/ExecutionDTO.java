@@ -1,5 +1,7 @@
 package org.lhpsn.seckill.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.lhpsn.seckill.domain.SuccessKilled;
 import org.lhpsn.seckill.enums.SeckillStateEnum;
 
@@ -9,26 +11,23 @@ import org.lhpsn.seckill.enums.SeckillStateEnum;
  * @author lh
  * @since 1.0.0
  */
+@ApiModel(value = "秒杀响应DTO")
 public class ExecutionDTO {
 
-    /**
-     * 秒杀库存id
-     */
+    @ApiModelProperty(value = "秒杀库存id")
     private Long seckillId;
 
-    /**
-     * 状态，对应枚举状态值
-     */
+    @ApiModelProperty(value = "状态，SUCCESS(1, \"秒杀成功\"),\n" +
+            "    CLOSE(0, \"秒杀关闭\"),\n" +
+            "    REPEAT(-1, \"重复秒杀\"),\n" +
+            "    DATA_REWRITE(-2, \"数据篡改\"),\n" +
+            "    INNER_ERROR(-3, \"系统异常\");")
     private Integer state;
 
-    /**
-     * 状态消息
-     */
+    @ApiModelProperty(value = "状态消息")
     private String stateInfo;
 
-    /**
-     * 秒杀成功对象
-     */
+    @ApiModelProperty(value = "秒杀成功对象")
     private SuccessKilled successKilled;
 
     public ExecutionDTO(Long seckillId, SeckillStateEnum seckillStateEnum, SuccessKilled successKilled) {
