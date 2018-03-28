@@ -4,12 +4,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 全局JSON响应数据包装对象
+ * 接口响应数据包装对象
  *
  * @author lh
  * @since 1.0.0
  */
-@ApiModel(value = "全局JSON响应数据包装对象", description = "所有JSON响应信息都将被该对象包装后返回")
+@ApiModel(value = "接口响应数据包装对象", description = "接口响应信息都将被该对象包装后返回")
 public class ResponseDTO<T> {
 
     @ApiModelProperty(value = "操作结果", notes = "若返回false，说明客户端调用错误而非业务错误，客户端可通过判断该值来判断是否是自身调用错误")

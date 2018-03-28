@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <bean class="org.lhpsn.seckill.config.SwaggerConfig" id="swagger2Config"/>
+    <!--<bean class="org.lhpsn.seckill.config.SwaggerConfig" id="swagger2Config"/>-->
 
     <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
     <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
